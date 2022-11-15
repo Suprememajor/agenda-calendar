@@ -31,6 +31,8 @@ class Agenda extends Component {
     this._closeModal = this._closeModal.bind(this);
     this.changeView = this.changeView.bind(this);
 
+    this.handleItemEdit = this.handleItemEdit.bind(this);
+
     // crud 
     this.addNewEvent = this.addNewEvent.bind(this);
     this.removeEvent = this.removeEvent.bind(this);
@@ -91,6 +93,14 @@ class Agenda extends Component {
   // remove an event
   removeEvent(items, item) {
     this.setState({ items: items });
+  }
+
+  // toggle modal for editing an event
+  handleItemEdit(item, openModal) {
+    if (item && openModal === true) {
+      this.setState({ selected: [item] });
+      return this._openModal();
+    }
   }
 
   render() {
@@ -156,6 +166,9 @@ class Agenda extends Component {
           view="calendar"
           autoScale={false}
           fixedHeader={true}
+
+          onItemEdit={this.handleItemEdit.bind(this)}
+          onItemRemove={this.removeEvent.bind(this)}
         />
         {this.state.showModal ? (
           <Modal clickOutside={this._closeModal}>
