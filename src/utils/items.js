@@ -1,6 +1,6 @@
 import { guid } from "react-agenda";
 
-const now = new Date();
+export const now = new Date();
 
 export const items = [
   {

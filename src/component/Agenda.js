@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import moment from "moment";
+import { ReactAgenda } from "react-agenda";
 
 // items import
 import { items } from "../utils/items";
 
 // colors import
 import { colors } from "../utils/colors";
+
+// current date
+import { now } from "../utils/items";
 
 class Agenda extends Component {
   constructor(props) {
@@ -16,7 +20,7 @@ class Agenda extends Component {
       selected: [],
       cellHeight: 60 / 4,
       showModal: false,
-      locale: "fr",
+      locale: "en",
       rowsPerHour: 4,
       numberOfDays: 4,
       startDate: new Date(),
@@ -109,6 +113,25 @@ class Agenda extends Component {
             {moment.duration(1, "day").humanize()}{" "}
           </button>
         </div>
+
+        <ReactAgenda
+          minDate={new Date(now.getFullYear(), now.getMonth() - 3)}
+          maxDate={new Date(now.getFullYear(), now.getMonth() + 3)}
+          startDate={this.state.startDate}
+          startAtTime={8}
+          endAtTime={23}
+          cellHeight={this.state.cellHeight}
+          locale="en"
+          items={this.state.items}
+          numberOfDays={this.state.numberOfDays}
+          headFormat={"ddd DD MMM"}
+          rowsPerHour={this.state.rowsPerHour}
+          itemColors={colors}
+          helper={true}
+          view="calendar"
+          autoScale={false}
+          fixedHeader={true}
+        />
       </div>
     );
   }
