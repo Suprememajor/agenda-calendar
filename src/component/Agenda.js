@@ -104,6 +104,14 @@ class Agenda extends Component {
     }
   }
 
+  // cell selection
+  handleCellSelection(item, openModal) {
+    if (this.state.selected && this.state.selected[0] === item) {
+      return this._openModal();
+    }
+    this.setState({ selected: [item] });
+  }
+
   // range selection configs
   handleRangeSelection(selected) {
     this.setState({ selected: selected, showCtrl: true });
@@ -112,6 +120,16 @@ class Agenda extends Component {
 
   // change in any of the items
   handleItemChange(items, item) {
+    this.setState({ items: items });
+  }
+
+  // date fix / selection
+  handleDateRangeChange(startDate, endDate) {
+    this.setState({ startDate: startDate });
+  }
+
+  // resizing item
+  handleItemSize(items, item) {
     this.setState({ items: items });
   }
 
@@ -181,8 +199,11 @@ class Agenda extends Component {
 
           onRangeSelection={this.handleRangeSelection.bind(this)}
           onChangeEvent={this.handleItemChange.bind(this)}
+          onChangeDuration={this.handleItemSize.bind(this)}
           onItemEdit={this.handleItemEdit.bind(this)}
+          onCellSelect={this.handleCellSelection.bind(this)}
           onItemRemove={this.removeEvent.bind(this)}
+          onDateRangeChange={this.handleDateRangeChange.bind(this)}
         />
         {this.state.showModal ? (
           <Modal clickOutside={this._closeModal}>
