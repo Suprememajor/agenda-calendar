@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import moment from "moment";
-import { ReactAgenda } from "react-agenda";
+import { ReactAgenda, ReactAgendaCtrl, Modal } from "react-agenda";
 
 // items import
 import { items } from "../utils/items";
@@ -30,6 +30,11 @@ class Agenda extends Component {
     this._openModal = this._openModal.bind(this);
     this._closeModal = this._closeModal.bind(this);
     this.changeView = this.changeView.bind(this);
+
+    // crud 
+    this.addNewEvent = this.addNewEvent.bind(this);
+    this.removeEvent = this.removeEvent.bind(this);
+    this.editEvent = this.editEvent.bind(this);
   }
 
   componentDidMount() {
@@ -52,10 +57,12 @@ class Agenda extends Component {
     this.setState({ cellHeight: num });
   }
 
+  // toggle modal open
   _openModal() {
     this.setState({ showModal: true });
   }
 
+  // close modal
   _closeModal(e) {
     if (e) {
       e.stopPropagation();
@@ -64,8 +71,26 @@ class Agenda extends Component {
     this.setState({ showModal: false });
   }
 
+  // change view based on selected number of days
   changeView(days, event) {
     this.setState({ numberOfDays: days });
+  }
+
+  // add new event
+  addNewEvent(items, newItems) {
+    this.setState({ showModal: false, selected: [], items: items });
+    this._closeModal();
+  }
+
+  // edit an events
+  editEvent(items, item) {
+    this.setState({ showModal: false, selected: [], items: items });
+    this._closeModal();
+  }
+
+  // remove an event
+  removeEvent(items, item) {
+    this.setState({ items: items });
   }
 
   render() {
@@ -132,6 +157,21 @@ class Agenda extends Component {
           autoScale={false}
           fixedHeader={true}
         />
+        {this.state.showModal ? (
+          <Modal clickOutside={this._closeModal}>
+            <div className="modal-content">
+              <ReactAgendaCtrl
+                items={this.state.items}
+                itemColors={colors}
+                selectedCells={this.state.selected}
+                Addnew={this.addNewEvent}
+                edit={this.editEvent}
+              />
+            </div>
+          </Modal>
+        ) : (
+          ""
+        )}
       </div>
     );
   }
