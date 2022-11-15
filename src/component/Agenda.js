@@ -34,7 +34,7 @@ class Agenda extends Component {
     this.handleRangeSelection = this.handleRangeSelection.bind(this);
     this.handleItemEdit = this.handleItemEdit.bind(this);
 
-    // crud 
+    // crud
     this.addNewEvent = this.addNewEvent.bind(this);
     this.removeEvent = this.removeEvent.bind(this);
     this.editEvent = this.editEvent.bind(this);
@@ -134,6 +134,19 @@ class Agenda extends Component {
   }
 
   render() {
+    // For a custom component
+
+    // const AgendaItem = function (props) {
+    //   console.log(" item component props", props);
+    //   return (
+    //     <div
+    //       style={{ display: "block", position: "absolute", background: "#FFF" }}
+    //     >
+    //       {props.item.name}{" "}
+    //       <button onClick={() => props.edit(props.item)}>Edit </button>
+    //     </div>
+    //   );
+    // };
     return (
       <div className="content-expanded">
         <div className="control-buttons">
@@ -180,6 +193,8 @@ class Agenda extends Component {
         </div>
 
         <ReactAgenda
+          // to include a custom event card component design
+          //  itemComponent={AgendaItem}
           minDate={new Date(now.getFullYear(), now.getMonth() - 3)}
           maxDate={new Date(now.getFullYear(), now.getMonth() + 3)}
           startDate={this.state.startDate}
@@ -196,7 +211,6 @@ class Agenda extends Component {
           view="calendar"
           autoScale={false}
           fixedHeader={true}
-
           onRangeSelection={this.handleRangeSelection.bind(this)}
           onChangeEvent={this.handleItemChange.bind(this)}
           onChangeDuration={this.handleItemSize.bind(this)}
