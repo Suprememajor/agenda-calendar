@@ -31,6 +31,7 @@ class Agenda extends Component {
     this._closeModal = this._closeModal.bind(this);
     this.changeView = this.changeView.bind(this);
 
+    this.handleRangeSelection = this.handleRangeSelection.bind(this);
     this.handleItemEdit = this.handleItemEdit.bind(this);
 
     // crud 
@@ -103,6 +104,17 @@ class Agenda extends Component {
     }
   }
 
+  // range selection configs
+  handleRangeSelection(selected) {
+    this.setState({ selected: selected, showCtrl: true });
+    this._openModal();
+  }
+
+  // change in any of the items
+  handleItemChange(items, item) {
+    this.setState({ items: items });
+  }
+
   render() {
     return (
       <div className="content-expanded">
@@ -167,6 +179,8 @@ class Agenda extends Component {
           autoScale={false}
           fixedHeader={true}
 
+          onRangeSelection={this.handleRangeSelection.bind(this)}
+          onChangeEvent={this.handleItemChange.bind(this)}
           onItemEdit={this.handleItemEdit.bind(this)}
           onItemRemove={this.removeEvent.bind(this)}
         />
